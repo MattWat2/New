@@ -1,2 +1,11 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import Clock from '../components/clock.svelte';
+
+	let time = new Date();
+
+	setInterval(() => {
+		time = new Date();
+	}, 1000);
+</script>
+
+<Clock {time} belowHints={'digits'} rowHints={true} />
