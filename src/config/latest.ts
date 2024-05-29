@@ -1,0 +1,32 @@
+import { configV1 } from './v1';
+import { configV2, migrateV1ToV2, type ConfigV2 } from './v2';
+import { z } from 'zod';
+
+export type ConfigLatest = ConfigV2;
+
+export const configAny = z.discriminatedUnion('version', [configV1, configV2]);
+export type ConfigAny = z.infer<typeof configAny>;
+
+export const migrateToLatest = (config: ConfigAny): ConfigLatest => {
+	if (config.version === 1.9) {
+		const next = migrateV1ToV2(config);
+		return migrateToLatest(next);
+	}
+
+	return config;
+};
+
+export const defaultConfig: ConfigLatest = {
+	version: 2,
+	belowHints: 'digits',
+	rightHints: true,
+	hexDark: false,
+	hexLight: false,
+	inversion: {
+		method: 'off'
+	},
+	colorLight: 'green',
+	colorDark: 'green',
+	size: 'md',
+	bookmarksBar: 'show'
+};
