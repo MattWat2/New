@@ -1,5 +1,5 @@
 import { configV1 } from './v1';
-import { configV2, migrateV1ToV2, type ConfigV2 } from './v2';
+import { configV2, migrateV1ToV2, type ConfigV2, defaultConfigV2 } from './v2';
 import { z } from 'zod';
 
 export type ConfigLatest = ConfigV2;
@@ -16,17 +16,4 @@ export const migrateToLatest = (config: ConfigAny): ConfigLatest => {
 	return config;
 };
 
-export const defaultConfig: ConfigLatest = {
-	version: 2,
-	belowHints: 'digits',
-	rightHints: true,
-	hexDark: false,
-	hexLight: false,
-	inversion: {
-		method: 'off'
-	},
-	colorLight: 'green',
-	colorDark: 'green',
-	size: 'md',
-	bookmarksBar: 'show'
-};
+export const defaultConfig: ConfigLatest = defaultConfigV2;

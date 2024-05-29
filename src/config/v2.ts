@@ -22,10 +22,28 @@ export const configV2 = z.object({
 			lat: z.number().min(-90).max(90),
 			long: z.number().min(-180).max(180)
 		})
-	])
+	]),
+
+	showMessage: z.enum(['none', 'migrated', 'new'])
 });
 
 export type ConfigV2 = z.infer<typeof configV2>;
+
+export const defaultConfigV2: ConfigV2 = {
+	version: 2,
+	belowHints: 'digits',
+	rightHints: true,
+	hexDark: false,
+	hexLight: false,
+	inversion: {
+		method: 'off'
+	},
+	colorLight: 'green',
+	colorDark: 'green',
+	size: 'md',
+	bookmarksBar: 'show',
+	showMessage: 'new'
+};
 
 const belowHintsMigration: Record<ConfigV1['lastrow'], ConfigV2['belowHints']> = {
 	nothing: 'off',
@@ -84,6 +102,7 @@ export const migrateV1ToV2 = (v1: ConfigV1): ConfigV2 => {
 		colorLight: v1.light,
 		inversion: inversionMigration(v1),
 		hexDark: booleanMigration[v1.hex],
-		hexLight: booleanMigration[v1['hex-light']]
+		hexLight: booleanMigration[v1['hex-light']],
+		showMessage: 'migrated'
 	};
 };
