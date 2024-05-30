@@ -1,5 +1,5 @@
 import { readonly, writable } from 'svelte/store';
-import { configAny, defaultConfig, migrateToLatest, type ConfigLatest } from '../config/latest';
+import { configAny, defaultConfig, migrateToLatest, type ConfigLatest } from '$lib/config/latest';
 
 // In development, fall back to stub when no chrome or browser
 const stubSource = import.meta.env.PROD
