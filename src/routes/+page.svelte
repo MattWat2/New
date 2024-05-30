@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Clock from '../components/clock.svelte';
+	import Clock from '$lib/components/clock.svelte';
 
 	let time = new Date();
 
