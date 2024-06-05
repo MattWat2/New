@@ -10,6 +10,8 @@ declare global {
 	}
 
 	namespace chrome {}
+
+	const APP_VERSION: string;
 }
 
 export {};
