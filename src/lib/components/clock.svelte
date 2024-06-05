@@ -1,14 +1,14 @@
 <script lang="ts">
-	export let time: Date;
+	import { time } from '$lib/stores/time';
 	export let belowHints: 'off' | 'letters' | 'digits';
 	export let rowHints: boolean;
 
-	$: hours10 = Math.floor(time.getHours() / 10);
-	$: hours1 = time.getHours() % 10;
-	$: minutes10 = Math.floor(time.getMinutes() / 10);
-	$: minutes1 = time.getMinutes() % 10;
-	$: seconds10 = Math.floor(time.getSeconds() / 10);
-	$: seconds1 = time.getSeconds() % 10;
+	$: hours10 = Math.floor($time.getHours() / 10);
+	$: hours1 = $time.getHours() % 10;
+	$: minutes10 = Math.floor($time.getMinutes() / 10);
+	$: minutes1 = $time.getMinutes() % 10;
+	$: seconds10 = Math.floor($time.getSeconds() / 10);
+	$: seconds1 = $time.getSeconds() % 10;
 </script>
 
 <div class="clockContainer">

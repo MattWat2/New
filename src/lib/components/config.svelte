@@ -13,6 +13,17 @@
 		</div>
 		<div>
 			<label>
+				Show
+				<select bind:value={$config.belowHints}>
+					<option value="off">Nothing</option>
+					<option value="letters">Letters</option>
+					<option value="digits">Digits</option>
+				</select>
+				below clock
+			</label>
+		</div>
+		<div>
+			<label>
 				Size:
 				<select bind:value={$config.size}>
 					<option value="xs">Tiny</option>
@@ -25,7 +36,7 @@
 		<div>
 			<label>
 				Dark colour:
-				<select bind:value={$config.colorDark}>
+				<select bind:value={$config.colorDark} disabled={$config.hexDark}>
 					<option value="black">Black</option>
 					<option value="grey">Grey</option>
 					<option value="green">Green</option>
@@ -33,11 +44,15 @@
 					<option value="red">Red</option>
 				</select>
 			</label>
+			<label>
+				Hex
+				<input type="checkbox" bind:checked={$config.hexDark} />
+			</label>
 		</div>
 		<div>
 			<label>
 				Light colour:
-				<select bind:value={$config.colorLight}>
+				<select bind:value={$config.colorLight} disabled={$config.hexLight}>
 					<option value="white">White</option>
 					<option value="grey">Grey</option>
 					<option value="green">Green</option>
@@ -46,7 +61,12 @@
 					<option value="orange">Orange</option>
 				</select>
 			</label>
+			<label>
+				Hex
+				<input type="checkbox" bind:checked={$config.hexLight} />
+			</label>
 		</div>
+		<!-- svelte-ignore missing-declaration -->
 		<div>
 			Version {APP_VERSION}
 		</div>

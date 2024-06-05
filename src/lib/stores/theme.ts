@@ -1,6 +1,7 @@
 import type { ConfigLatest } from '$lib/config/latest';
 import { derived } from 'svelte/store';
-import { readonlyConfig } from './config';
+import { config } from './config';
+import { time } from './time';
 
 const sizes: Record<ConfigLatest['size'], string> = {
 	xs: '0.5em',
@@ -26,9 +27,30 @@ const colorsDark: Record<ConfigLatest['colorDark'], string> = {
 	red: 'rgb(123 13 13)'
 };
 
-export const theme = derived(readonlyConfig, ($c) => {
-	const darkRgb = colorsDark[$c.colorDark];
-	const lightRgb = colorsLight[$c.colorLight];
+const padLeft =
+	(desiredMinLength: number) =>
+	(num: number): string => {
+		let out = num.toString();
+		while (out.length < desiredMinLength) {
+			out = '0' + out;
+		}
+		return out;
+	};
+
+const pad2 = padLeft(2);
+
+const darkFromTime = (time: Date) =>
+	'#' + pad2(time.getHours()) + pad2(time.getMinutes()) + pad2(time.getSeconds());
+
+const lightFromTime = (time: Date) => {
+	const base = darkFromTime(time);
+
+	return `color-mix(in srgb, ${base} 25%, white)`;
+};
+
+export const theme = derived([config, time], ([$c, $t]) => {
+	const darkRgb = $c.hexDark ? darkFromTime($t) : colorsDark[$c.colorDark];
+	const lightRgb = $c.hexLight ? lightFromTime($t) : colorsLight[$c.colorLight];
 	return {
 		'--bt-size': sizes[$c.size],
 		'--bt-hint-font-weight': 400,

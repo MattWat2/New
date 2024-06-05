@@ -41,19 +41,19 @@ const loadConfig = async (): Promise<ConfigLatest> => {
 const initialConfig = await loadConfig();
 
 export const writeableConfig = writable(initialConfig);
-export const readonlyConfig = readonly(writeableConfig);
+export const config = readonly(writeableConfig);
 
-readonlyConfig.subscribe(async (newConfig) => {
+config.subscribe(async (newConfig) => {
 	await source.storage.sync.set(newConfig);
 });
 
-readonlyConfig.subscribe(async (newConfig) => {
+config.subscribe(async (newConfig) => {
 	console.info('Config updated to', newConfig);
 });
 
 if (typeof chrome !== 'undefined') {
 	chrome.storage.sync.onChanged.addListener((changes) => {
-		const val = get(readonlyConfig);
+		const val = get(config);
 		const dirtyChanges = Object.fromEntries(
 			Object.entries(changes).filter(([k, c]) => c.newValue !== val[k as keyof ConfigLatest])
 		);
