@@ -1,4 +1,4 @@
-import { readonly, writable } from 'svelte/store';
+import { readonly, writable, get } from 'svelte/store';
 import { configAny, defaultConfig, migrateToLatest, type ConfigLatest } from '$lib/config/latest';
 
 // In development, fall back to stub when no chrome or browser
@@ -43,12 +43,6 @@ const initialConfig = await loadConfig();
 export const writeableConfig = writable(initialConfig);
 export const readonlyConfig = readonly(writeableConfig);
 
-export const setConfig = (updates: Partial<ConfigLatest>) =>
-	writeableConfig.update((existing) => ({
-		...existing,
-		updates
-	}));
-
 readonlyConfig.subscribe(async (newConfig) => {
 	await source.storage.sync.set(newConfig);
 });
@@ -56,3 +50,17 @@ readonlyConfig.subscribe(async (newConfig) => {
 readonlyConfig.subscribe(async (newConfig) => {
 	console.info('Config updated to', newConfig);
 });
+
+if (typeof chrome !== 'undefined') {
+	chrome.storage.sync.onChanged.addListener((changes) => {
+		const val = get(readonlyConfig);
+		const dirtyChanges = Object.fromEntries(
+			Object.entries(changes).filter(([k, c]) => c.newValue !== val[k as keyof ConfigLatest])
+		);
+		if (Object.keys(dirtyChanges).length > 0) {
+			console.log('Settings updated externally:', dirtyChanges);
+			console.log('Reloading config');
+			loadConfig().then(writeableConfig.set);
+		}
+	});
+}
