@@ -1,7 +1,17 @@
 <script lang="ts">
+	import { config } from '$lib/stores/config';
 	import { time } from '$lib/stores/time';
-	export let belowHints: 'off' | 'letters' | 'digits';
 	export let rowHints: boolean;
+
+	// Persist last non-off hint state to enable animations
+	let visBelowHints = $config.belowHints;
+	config.subscribe((c) => {
+		if (c.belowHints === 'off') {
+			return;
+		} else {
+			visBelowHints = c.belowHints;
+		}
+	});
 
 	$: hours10 = Math.floor($time.getHours() / 10);
 	$: hours1 = $time.getHours() % 10;
@@ -39,23 +49,23 @@
 		<div class="hint col-hint row-digit-4">{rowHints ? '4' : ''}</div>
 		<div class="hint col-hint row-digit-8">{rowHints ? '8' : ''}</div>
 
-		<div class="hint col-digit-1 row-hint">
-			{belowHints === 'letters' ? 'H' : belowHints === 'digits' ? hours10 : ''}
+		<div class="hint col-digit-1 row-hint" class:hidden={$config.belowHints === 'off'}>
+			{visBelowHints === 'letters' ? 'H' : hours10}
 		</div>
-		<div class="hint col-digit-2 row-hint">
-			{belowHints === 'letters' ? 'H' : belowHints === 'digits' ? hours1 : ''}
+		<div class="hint col-digit-2 row-hint" class:hidden={$config.belowHints === 'off'}>
+			{visBelowHints === 'letters' ? 'H' : hours1}
 		</div>
-		<div class="hint col-digit-3 row-hint">
-			{belowHints === 'letters' ? 'M' : belowHints === 'digits' ? minutes10 : ''}
+		<div class="hint col-digit-3 row-hint" class:hidden={$config.belowHints === 'off'}>
+			{visBelowHints === 'letters' ? 'M' : minutes10}
 		</div>
-		<div class="hint col-digit-4 row-hint">
-			{belowHints === 'letters' ? 'M' : belowHints === 'digits' ? minutes1 : ''}
+		<div class="hint col-digit-4 row-hint" class:hidden={$config.belowHints === 'off'}>
+			{visBelowHints === 'letters' ? 'M' : minutes1}
 		</div>
-		<div class="hint col-digit-5 row-hint">
-			{belowHints === 'letters' ? 'S' : belowHints === 'digits' ? seconds10 : ''}
+		<div class="hint col-digit-5 row-hint" class:hidden={$config.belowHints === 'off'}>
+			{visBelowHints === 'letters' ? 'S' : seconds10}
 		</div>
-		<div class="hint col-digit-6 row-hint">
-			{belowHints === 'letters' ? 'S' : belowHints === 'digits' ? seconds1 : ''}
+		<div class="hint col-digit-6 row-hint" class:hidden={$config.belowHints === 'off'}>
+			{visBelowHints === 'letters' ? 'S' : seconds1}
 		</div>
 	</div>
 </div>
@@ -94,6 +104,11 @@
 
 	.hint {
 		text-align: center;
+		transition: opacity 0.3s ease-in-out;
+	}
+
+	.hidden {
+		opacity: 0;
 	}
 
 	.col-hint {
