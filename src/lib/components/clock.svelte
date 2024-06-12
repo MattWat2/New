@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { config } from '$lib/stores/config';
 	import { time } from '$lib/stores/time';
-	export let rowHints: boolean;
 
 	// Persist last non-off hint state to enable animations
 	let visBelowHints = $config.belowHints;
@@ -44,10 +43,10 @@
 		<div class="col-digit-6 row-digit-4 bit s-1-4" class:on={seconds1 % 10 & 0x4} />
 		<div class="col-digit-6 row-digit-8 bit s-1-8" class:on={seconds1 % 10 & 0x8} />
 
-		<div class="hint col-hint row-digit-1">{rowHints ? '1' : ''}</div>
-		<div class="hint col-hint row-digit-2">{rowHints ? '2' : ''}</div>
-		<div class="hint col-hint row-digit-4">{rowHints ? '4' : ''}</div>
-		<div class="hint col-hint row-digit-8">{rowHints ? '8' : ''}</div>
+		<div class="hint col-hint row-digit-1">{$config.rightHints ? '1' : ''}</div>
+		<div class="hint col-hint row-digit-2">{$config.rightHints ? '2' : ''}</div>
+		<div class="hint col-hint row-digit-4">{$config.rightHints ? '4' : ''}</div>
+		<div class="hint col-hint row-digit-8">{$config.rightHints ? '8' : ''}</div>
 
 		<div class="hint col-digit-1 row-hint" class:hidden={$config.belowHints === 'off'}>
 			{visBelowHints === 'letters' ? 'H' : hours10}

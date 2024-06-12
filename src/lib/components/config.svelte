@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { writeableConfig as config } from '$lib/stores/config';
+	import ConfigInvert from './configInvert.svelte';
 </script>
 
 <div class="container">
@@ -66,6 +67,7 @@
 				<input type="checkbox" bind:checked={$config.hexLight} />
 			</label>
 		</div>
+		<ConfigInvert bind:inversion={$config.inversion} />
 		<!-- svelte-ignore missing-declaration -->
 		<div>
 			Version {APP_VERSION}

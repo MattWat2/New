@@ -2,6 +2,7 @@ import type { ConfigLatest } from '$lib/config/latest';
 import { derived } from 'svelte/store';
 import { config } from './config';
 import { time } from './time';
+import { getTimes } from 'suncalc';
 
 const sizes: Record<ConfigLatest['size'], string> = {
 	xs: '0.5em',
@@ -48,15 +49,30 @@ const lightFromTime = (time: Date) => {
 	return `color-mix(in srgb, ${base} 25%, white)`;
 };
 
+const getInverted = (inversion: ConfigLatest['inversion'], date: Date): boolean => {
+	if (inversion.method === 'auto_coordinates') {
+		const result = getTimes(date, inversion.lat, inversion.long);
+
+		console.log(result);
+
+		// Sunset was more recent than sunruse
+		return result.sunset.getTime() > result.sunrise.getTime();
+	}
+
+	return inversion.method === 'on';
+};
+
 export const theme = derived([config, time], ([$c, $t]) => {
+	const inverted = getInverted($c.inversion, $t);
+
 	const darkRgb = $c.hexDark ? darkFromTime($t) : colorsDark[$c.colorDark];
 	const lightRgb = $c.hexLight ? lightFromTime($t) : colorsLight[$c.colorLight];
 	return {
 		'--bt-size': sizes[$c.size],
 		'--bt-hint-font-weight': 400,
 		'--bt-font-family': 'system-ui, Arial, sans-serif',
-		'--bt-color-bg': $c.inversion.method === 'on' ? darkRgb : lightRgb,
-		'--bt-color-fg': $c.inversion.method === 'on' ? lightRgb : darkRgb,
+		'--bt-color-bg': inverted ? darkRgb : lightRgb,
+		'--bt-color-fg': inverted ? lightRgb : darkRgb,
 		'--bt-col-hint-opacity': $c.rightHints ? 1 : 0
 	};
 });

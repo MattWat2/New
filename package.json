@@ -13,9 +13,13 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@types/chrome": "^0.0.268",
 		"@types/eslint": "^8.56.0",
+		"@types/firefox-webext-browser": "^120.0.3",
+		"@types/suncalc": "^1.9.2",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"eslint": "^8.56.0",
@@ -32,9 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-static": "^3.0.1",
-		"@types/chrome": "^0.0.268",
-		"@types/firefox-webext-browser": "^120.0.3",
+		"suncalc": "1.9.0",
 		"zod": "^3.23.8"
 	}
 }

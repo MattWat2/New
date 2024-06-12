@@ -5,6 +5,6 @@
 </script>
 
 <ThemeProvider>
-	<Clock belowHints={'digits'} rowHints={true} />
+	<Clock />
 	<Config />
 </ThemeProvider>
