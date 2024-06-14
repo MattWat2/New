@@ -70,7 +70,7 @@ export const theme = derived([config, time], ([$c, $t]) => {
 	return {
 		'--bt-size': sizes[$c.size],
 		'--bt-hint-font-weight': 400,
-		'--bt-font-family': 'system-ui, Arial, sans-serif',
+		'--bt-font-family': '"IBM Plex Sans", Arial, sans-serif',
 		'--bt-color-bg': inverted ? darkRgb : lightRgb,
 		'--bt-color-fg': inverted ? lightRgb : darkRgb,
 		'--bt-col-hint-opacity': $c.rightHints ? 1 : 0

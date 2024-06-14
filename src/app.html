@@ -5,6 +5,18 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<style>
+			@font-face {
+				font-family: 'IBM Plex Sans';
+				font-weight: normal;
+				src: url('/IBMPlexSans-Medium.otf') format('opentype');
+			}
+
+			@font-face {
+				font-family: 'IBM Plex Sans';
+				font-weight: bold;
+				src: url('/IBMPlexSans-Bold.otf') format('opentype');
+			}
+
 			html,
 			body {
 				height: 100%;
@@ -43,6 +55,114 @@
 				body {
 					background-color: black;
 				}
+			}
+
+			input[type='checkbox'] {
+				width: 0;
+				height: 1.5em;
+				width: 2.8em;
+				appearance: none;
+				margin: 0;
+				border: 1px solid var(--bt-color-bg);
+				border-radius: 0.75em;
+				position: relative;
+				transition: background-color 0.1s ease-in-out;
+			}
+
+			input[type='checkbox']:checked {
+				background-color: var(--bt-color-bg);
+			}
+
+			input[type='checkbox']::after {
+				content: '';
+				position: absolute;
+				display: block;
+				height: calc(1.5em - 8px);
+				width: calc(1.5em - 8px);
+				border-radius: calc(0.75em - 4px);
+				top: 3px;
+				left: 3px;
+				background-color: var(--bt-color-bg);
+				transition: left 0.1s ease-in-out;
+			}
+
+			input[type='checkbox']:checked::after {
+				left: calc(1.3em + 3px);
+				background-color: var(--bt-color-fg);
+			}
+
+			input[type='radio'] {
+				width: 0;
+				height: 1.5em;
+				width: 1.5em;
+				appearance: none;
+				margin: 0;
+				border: 1px solid var(--bt-color-bg);
+				border-radius: 0.75em;
+				position: relative;
+				transition: background-color 0.1s ease-in-out;
+			}
+
+			input[type='radio']:checked {
+				background-color: var(--bt-color-bg);
+			}
+
+			input[type='radio']::after {
+				content: '';
+				position: absolute;
+				display: block;
+				height: calc(1.5em - 10px);
+				width: calc(1.5em - 10px);
+				border-radius: calc(0.75em - 5px);
+				top: 4px;
+				left: 4px;
+				background-color: var(--bt-color-bg);
+				transition: opacity 0.1s ease-in-out;
+				opacity: 0;
+			}
+
+			input[type='radio']:checked::after {
+				opacity: 1;
+				background-color: var(--bt-color-fg);
+			}
+
+			select,
+			input[type='text'],
+			input[type='number'] {
+				border: 1px solid var(--bt-color-bg);
+				font-family: inherit;
+				color: inherit;
+				background-color: transparent;
+				height: 1.5em;
+				border-radius: 0.75em;
+				padding: 0 0.5em;
+				font-size: 1em;
+			}
+
+			input[type='text']:invalid,
+			input[type='number']:invalid {
+				border: 1px solid red;
+			}
+
+			select:disabled {
+				opacity: 0.7;
+			}
+
+			label {
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+			}
+
+			button {
+				border: 1px solid var(--bt-color-bg);
+				font-family: inherit;
+				color: inherit;
+				background-color: transparent;
+				height: 1.5em;
+				border-radius: 0.75em;
+				padding: 0 0.5em;
+				font-size: 1em;
 			}
 		</style>
 		%sveltekit.head%

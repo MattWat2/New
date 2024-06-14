@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { type ConfigLatest } from '$lib/config/latest';
+	import { getTimes } from 'suncalc';
 
 	export let inversion: ConfigLatest['inversion'];
 
@@ -24,6 +25,8 @@
 	let latitudeInput: HTMLInputElement;
 	let longitudeInput: HTMLInputElement;
 
+	let sun: { sunrise: Date; sunset: Date } | undefined;
+
 	$: {
 		console.log({
 			method,
@@ -46,6 +49,8 @@
 			latitudeInput?.validity.valid &&
 			longitudeInput?.validity.valid
 		) {
+			const times = getTimes(new Date(), latitude, longitude);
+			sun = { sunrise: times.sunrise, sunset: times.sunset };
 			inversion = {
 				method: 'auto_coordinates',
 				lat: latitude,
@@ -76,45 +81,89 @@
 	};
 </script>
 
-<label>
-	<input type="radio" bind:group={method} value={'off'} />
-	Off
-</label>
+<h2>Inversion</h2>
 
-<label>
-	<input type="radio" bind:group={method} value={'on'} />
-	On
-</label>
+<div class="labels">
+	<label>
+		<input type="radio" bind:group={method} value={'off'} />
+		Off
+	</label>
 
-<label>
-	<input type="radio" bind:group={method} value={'auto_coordinates'} />
-	Location
-</label>
+	<label>
+		<input type="radio" bind:group={method} value={'on'} />
+		On
+	</label>
 
-{#if method === 'auto_coordinates'}
-	<button on:click={onGeolocate}>Use current location</button>
 	<div>
-		{#if geoStatus.status === 'loading'}
-			Loading
-		{/if}
-		{#if geoStatus.status === 'error'}
-			{geoStatus.error}
+		<label>
+			<input type="radio" bind:group={method} value={'auto_coordinates'} />
+			Sunset/sunrise
+		</label>
+		{#if method === 'auto_coordinates'}
+			<div class="geoControls">
+				<button on:click={onGeolocate}>Use current location</button>
+
+				{#if geoStatus.status === 'loading'}
+					<div>Loading (this can take a minute)</div>
+				{/if}
+				{#if geoStatus.status === 'error'}
+					<div>{geoStatus.error}</div>
+				{/if}
+
+				<label>
+					Latitude:
+					<input
+						type="number"
+						step="any"
+						style="width: 6em"
+						bind:this={latitudeInput}
+						bind:value={latitude}
+						min={-90}
+						max={90}
+					/>
+				</label>
+
+				<label>
+					Longitude:
+					<input
+						type="number"
+						step="any"
+						style="width: 6em"
+						bind:this={longitudeInput}
+						bind:value={longitude}
+						min={-180}
+						max={180}
+					/>
+				</label>
+
+				{#if sun !== undefined}
+					<div>
+						Sunrise at {Intl.DateTimeFormat(navigator.language, {
+							dateStyle: undefined,
+							timeStyle: 'short'
+						}).format(sun.sunrise)}, sunset at {Intl.DateTimeFormat(navigator.language, {
+							dateStyle: undefined,
+							timeStyle: 'short'
+						}).format(sun.sunset)}
+					</div>
+				{/if}
+			</div>
 		{/if}
 	</div>
-	<label>
-		Latitude:
-		<input
-			type="number"
-			step="0.001"
-			bind:this={latitudeInput}
-			bind:value={latitude}
-			min={-90}
-			max={90}
-		/>
-	</label>
+</div>
 
-	<label>
-		Longitude:
-		<input type="number" bind:this={longitudeInput} bind:value={longitude} min={-180} max={180} />
-	</label>
-{/if}
+<style>
+	.labels {
+		display: flex;
+		align-items: start;
+		gap: 1em;
+	}
+
+	.geoControls {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		gap: 0.5em;
+		margin-top: 0.5em;
+	}
+</style>

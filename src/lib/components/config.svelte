@@ -4,7 +4,7 @@
 </script>
 
 <div class="container">
-	<div class="contents">
+	<div class="col1 col">
 		<h1 class="heading">Settings</h1>
 		<div>
 			<label>
@@ -34,6 +34,7 @@
 				</select>
 			</label>
 		</div>
+		<h2>Colour</h2>
 		<div>
 			<label>
 				Dark colour:
@@ -67,7 +68,11 @@
 				<input type="checkbox" bind:checked={$config.hexLight} />
 			</label>
 		</div>
+	</div>
+	<div class="col2 col">
 		<ConfigInvert bind:inversion={$config.inversion} />
+	</div>
+	<div class="col1 col">
 		<!-- svelte-ignore missing-declaration -->
 		<div>
 			Version {APP_VERSION}
@@ -79,18 +84,60 @@
 	.container {
 		background-color: var(--bt-color-fg);
 		color: var(--bt-color-bg);
+		transition:
+			color 0.3s ease-in-out,
+			background-color 0.3s ease-in-out;
 		padding: 2rem 0;
+		display: grid;
+
+		grid-template-columns:
+			1rem
+			[col1-start col2-start]
+			1fr
+			[col1-end col2-end]
+			1rem;
+		gap: 1rem;
+	}
+
+	@media screen and (min-width: 768px) {
+		.container {
+			grid-template-columns:
+				2rem
+				[col1-start col2-start]
+				1fr
+				[col1-end col2-end]
+				2rem;
+		}
+	}
+
+	@media screen and (min-width: 1024px) {
+		.container {
+			grid-template-columns:
+				minmax(0, 1fr)
+				[col1-start]
+				512px
+				[col1-end col2-start]
+				512px
+				[col2-end]
+				minmax(0, 1fr);
+		}
+	}
+
+	.col {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.col1 {
+		grid-column: col1-start / col1-end;
+	}
+
+	.col2 {
+		grid-column: col2-start / col2-end;
 	}
 
 	.heading {
 		font-weight: 800;
-	}
-
-	.contents {
-		margin: 0 auto;
-		max-width: 1000px;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
 	}
 </style>
