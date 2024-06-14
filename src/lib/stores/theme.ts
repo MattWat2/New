@@ -53,10 +53,17 @@ const getInverted = (inversion: ConfigLatest['inversion'], date: Date): boolean 
 	if (inversion.method === 'auto_coordinates') {
 		const result = getTimes(date, inversion.lat, inversion.long);
 
-		console.log(result);
+		const d = date.getTime();
+		const sunrise = result.sunrise.getTime();
+		const sunset = result.sunset.getTime();
 
-		// Sunset was more recent than sunruse
-		return result.sunset.getTime() > result.sunrise.getTime();
+		const periodDescribed = sunset > sunrise ? 'day' : 'night';
+
+		if (periodDescribed === 'night') {
+			return d > sunset && d < sunrise;
+		}
+
+		return d < sunrise || d > sunset;
 	}
 
 	return inversion.method === 'on';
