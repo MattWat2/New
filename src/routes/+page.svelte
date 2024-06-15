@@ -5,6 +5,7 @@
 	import Config from '$lib/components/config.svelte';
 	import SettingsIcon from '$lib/components/settingsIcon.svelte';
 	import ThemeProvider from '$lib/components/themeProvider.svelte';
+	import { config } from '$lib/stores/config';
 
 	let settingsOpen = false;
 	$: settingsTitle = settingsOpen ? 'Close settings' : 'Show settings';
@@ -12,6 +13,11 @@
 
 <ThemeProvider>
 	<div class="container" class:settingsOpen>
+		<div class="bookmarksContainer">
+			{#if $config.bookmarksBar !== 'off'}
+				<Bookmarks />
+			{/if}
+		</div>
 		<div class="clockContainer">
 			<Clock />
 			<div class="toggleSettingsHoverZone" aria-hidden="true" />
@@ -52,6 +58,14 @@
 		height: initial;
 	}
 
+	.bookmarksContainer {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		width: 100%;
+	}
+
 	.clockContainer {
 		grid-row: 2 / 3;
 		font-size: var(--bt-size);
@@ -87,14 +101,14 @@
 		border: none;
 		cursor: pointer;
 		transition: opacity 0.3s ease-in-out;
-		pointer-events: none;
 	}
 
 	.toggleSettings.autoHide {
 		opacity: 0;
+		pointer-events: none;
 	}
 
-	.toggleSettingsHoverZone:hover + .toggleSettings,
+	.toggleSettingsHoverZone:hover ~ .toggleSettings,
 	.toggleSettings:hover {
 		opacity: 1;
 		pointer-events: initial;
