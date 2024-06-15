@@ -3,6 +3,7 @@
 	import Clock from '$lib/components/clock.svelte';
 	import CloseIcon from '$lib/components/closeIcon.svelte';
 	import Config from '$lib/components/config.svelte';
+	import UpgradeMessage from '$lib/components/upgradeMessage.svelte';
 	import SettingsIcon from '$lib/components/settingsIcon.svelte';
 	import ThemeProvider from '$lib/components/themeProvider.svelte';
 	import { config } from '$lib/stores/config';
@@ -21,20 +22,23 @@
 		<div class="clockContainer">
 			<Clock />
 			<div class="toggleSettingsHoverZone" aria-hidden="true" />
-			<button
-				class="toggleSettings"
-				class:autoHide={!settingsOpen}
-				aria-label={settingsTitle}
-				title={settingsTitle}
-				on:click={() => {
-					settingsOpen = !settingsOpen;
-				}}
-				>{#if settingsOpen}
-					<CloseIcon />
-				{:else}
-					<SettingsIcon />
-				{/if}</button
-			>
+			<div class="cornerContainer">
+				<button
+					class="toggleSettings"
+					class:autoHide={!settingsOpen}
+					aria-label={settingsTitle}
+					title={settingsTitle}
+					on:click={() => {
+						settingsOpen = !settingsOpen;
+					}}
+					>{#if settingsOpen}
+						<CloseIcon />
+					{:else}
+						<SettingsIcon />
+					{/if}</button
+				>
+				<UpgradeMessage />
+			</div>
 		</div>
 		<div class="configContainer">
 			<Config />
@@ -92,10 +96,16 @@
 		height: calc(3rem + 30vh);
 	}
 
-	.toggleSettings {
+	.cornerContainer {
+		display: flex;
 		position: absolute;
 		left: 1rem;
 		bottom: 1rem;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.toggleSettings {
 		padding: 0;
 		font-size: 1rem;
 		border: none;
@@ -108,7 +118,8 @@
 		pointer-events: none;
 	}
 
-	.toggleSettingsHoverZone:hover ~ .toggleSettings,
+	.toggleSettingsHoverZone:hover ~ .cornerContainer .toggleSettings,
+	.cornerContainer:hover .toggleSettings,
 	.toggleSettings:hover {
 		opacity: 1;
 		pointer-events: initial;
