@@ -1,20 +1,33 @@
 <script lang="ts">
+	import Bookmarks from '$lib/components/bookmarks.svelte';
 	import Clock from '$lib/components/clock.svelte';
+	import CloseIcon from '$lib/components/closeIcon.svelte';
 	import Config from '$lib/components/config.svelte';
+	import SettingsIcon from '$lib/components/settingsIcon.svelte';
 	import ThemeProvider from '$lib/components/themeProvider.svelte';
 
 	let settingsOpen = false;
+	$: settingsTitle = settingsOpen ? 'Close settings' : 'Show settings';
 </script>
 
 <ThemeProvider>
 	<div class="container" class:settingsOpen>
 		<div class="clockContainer">
 			<Clock />
+			<div class="toggleSettingsHoverZone" aria-hidden="true" />
 			<button
-				class="showSettings"
+				class="toggleSettings"
+				class:autoHide={!settingsOpen}
+				aria-label={settingsTitle}
+				title={settingsTitle}
 				on:click={() => {
 					settingsOpen = !settingsOpen;
-				}}>Show settings</button
+				}}
+				>{#if settingsOpen}
+					<CloseIcon />
+				{:else}
+					<SettingsIcon />
+				{/if}</button
 			>
 		</div>
 		<div class="configContainer">
@@ -55,11 +68,36 @@
 		position: relative;
 	}
 
-	.showSettings {
+	.toggleSettingsHoverZone {
+		display: block;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 50%;
+		min-width: 500px;
+		height: calc(3rem + 30vh);
+	}
+
+	.toggleSettings {
 		position: absolute;
 		left: 1rem;
 		bottom: 1rem;
+		padding: 0;
 		font-size: 1rem;
+		border: none;
+		cursor: pointer;
+		transition: opacity 0.3s ease-in-out;
+		pointer-events: none;
+	}
+
+	.toggleSettings.autoHide {
+		opacity: 0;
+	}
+
+	.toggleSettingsHoverZone:hover + .toggleSettings,
+	.toggleSettings:hover {
+		opacity: 1;
+		pointer-events: initial;
 	}
 
 	.configContainer {
