@@ -17,7 +17,7 @@
 		  }
 		| {
 				status: 'error';
-				error: GeolocationPositionError;
+				errorCode: GeolocationPositionError['code'];
 		  } = {
 		status: 'default'
 	};
@@ -74,7 +74,7 @@
 			(error) => {
 				geoStatus = {
 					status: 'error',
-					error
+					errorCode: error.code
 				};
 			}
 		);
@@ -101,13 +101,25 @@
 		</label>
 		{#if method === 'auto_coordinates'}
 			<div class="geoControls">
-				<button on:click={onGeolocate}>Use current location</button>
+				<button on:click={onGeolocate} disabled={geoStatus.status === 'loading'}
+					>Use current location</button
+				>
 
 				{#if geoStatus.status === 'loading'}
 					<div>Loading (this can take a minute)</div>
 				{/if}
 				{#if geoStatus.status === 'error'}
-					<div>{geoStatus.error}</div>
+					<div>
+						{#if geoStatus.errorCode === GeolocationPositionError.PERMISSION_DENIED}
+							Permission was denied
+						{:else if geoStatus.errorCode === GeolocationPositionError.POSITION_UNAVAILABLE}
+							Location is unavailable
+						{:else if geoStatus.errorCode === GeolocationPositionError.TIMEOUT}
+							Location request timed out
+						{:else}
+							Could not get location
+						{/if}
+					</div>
 				{/if}
 
 				<label>
