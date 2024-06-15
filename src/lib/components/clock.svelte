@@ -104,7 +104,7 @@
 	}
 
 	.col-hint {
-		grid-column: 9;
+		grid-column: 10;
 		opacity: var(--bt-col-hint-opacity);
 	}
 
