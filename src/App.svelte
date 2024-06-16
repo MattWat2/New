@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Bookmarks from '$lib/components/bookmarks.svelte';
-	import Clock from '$lib/components/clock.svelte';
-	import CloseIcon from '$lib/components/closeIcon.svelte';
-	import Config from '$lib/components/config.svelte';
-	import UpgradeMessage from '$lib/components/upgradeMessage.svelte';
-	import SettingsIcon from '$lib/components/settingsIcon.svelte';
-	import ThemeProvider from '$lib/components/themeProvider.svelte';
-	import { config } from '$lib/stores/config';
+	import Bookmarks from './lib/components/bookmarks.svelte';
+	import Clock from './lib/components/clock.svelte';
+	import CloseIcon from './lib/components/closeIcon.svelte';
+	import Config from './lib/components/config.svelte';
+	import UpgradeMessage from './lib/components/upgradeMessage.svelte';
+	import SettingsIcon from './lib/components/settingsIcon.svelte';
+	import ThemeProvider from './lib/components/themeProvider.svelte';
+	import { config } from './lib/stores/config';
 
 	let settingsOpen = false;
 	$: settingsTitle = settingsOpen ? 'Close settings' : 'Show settings';

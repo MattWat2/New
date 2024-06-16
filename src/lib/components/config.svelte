@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { writeableConfig as config } from '$lib/stores/config';
+	import { writeableConfig as config } from '../stores/config';
 	import ConfigInvert from './configInvert.svelte';
 </script>
 

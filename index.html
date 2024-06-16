@@ -2,7 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<link rel="icon" href="/favicon.png" />
+		<title>New tab</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<style>
 			@font-face {
@@ -20,6 +21,7 @@
 			html,
 			body {
 				height: 100%;
+				font-size: 16px;
 			}
 
 			body,
@@ -168,10 +170,14 @@
 			button:disabled {
 				opacity: 0.7;
 			}
+
+			#app {
+				display: contents;
+			}
 		</style>
-		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+	<body>
+		<div id="app"></div>
+		<script type="module" src="/src/main.ts"></script>
 	</body>
 </html>

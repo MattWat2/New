@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { config } from '$lib/stores/config';
-	import { time } from '$lib/stores/time';
+	import { config } from '../stores/config';
+	import { time } from '../stores/time';
 
 	// Persist last non-off hint state to enable animations
 	let visBelowHints = $config.belowHints;

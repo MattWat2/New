@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type ConfigLatest } from '$lib/config/latest';
+	import { type ConfigLatest } from '../config/latest';
 	import { getTimes } from 'suncalc';
 
 	export let inversion: ConfigLatest['inversion'];

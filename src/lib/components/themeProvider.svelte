@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { theme } from '$lib/stores/theme';
+	import { theme } from '../stores/theme';
 	import { derived } from 'svelte/store';
 
 	const style = derived(theme, ($t) =>

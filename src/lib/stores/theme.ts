@@ -1,4 +1,4 @@
-import type { ConfigLatest } from '$lib/config/latest';
+import type { ConfigLatest } from '../config/latest';
 import { derived } from 'svelte/store';
 import { config } from './config';
 import { time } from './time';

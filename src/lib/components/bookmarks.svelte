@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { config } from '$lib/stores/config';
+	import { config } from '../stores/config';
 
 	const ext = typeof chrome !== 'undefined';
 
