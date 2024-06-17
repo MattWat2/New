@@ -92,18 +92,16 @@ const inversionMigration = (
 	};
 };
 
-export const migrateV1ToV2 = (v1: ConfigV1): ConfigV2 => {
-	return {
-		version: 2,
-		appVersion: v1.version.toFixed(1),
-		belowHints: belowHintsMigration[v1.lastrow],
-		size: sizeMigration[v1.size],
-		bookmarksBar: bookmarksBarMigration[v1.bookmarks],
-		rightHints: booleanMigration[v1.showverttips],
-		colorDark: v1.dark,
-		colorLight: v1.light,
-		inversion: inversionMigration(v1),
-		hexDark: booleanMigration[v1.hex],
-		hexLight: booleanMigration[v1['hex-light']]
-	};
-};
+export const migrateV1ToV2 = (v1: ConfigV1): ConfigV2 => ({
+	version: 2,
+	appVersion: v1.version.toFixed(1),
+	belowHints: belowHintsMigration[v1.lastrow],
+	size: sizeMigration[v1.size],
+	bookmarksBar: bookmarksBarMigration[v1.bookmarks],
+	rightHints: booleanMigration[v1.showverttips],
+	colorDark: v1.dark,
+	colorLight: v1.light,
+	inversion: inversionMigration(v1),
+	hexDark: booleanMigration[v1.hex],
+	hexLight: booleanMigration[v1['hex-light']]
+});
