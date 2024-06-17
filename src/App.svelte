@@ -8,6 +8,8 @@
 	import ThemeProvider from './lib/components/themeProvider.svelte';
 	import { config } from './lib/stores/config';
 
+	import './app.css';
+
 	let settingsOpen = false;
 	$: settingsTitle = settingsOpen ? 'Close settings' : 'Show settings';
 </script>
