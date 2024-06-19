@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { writeableConfig as config } from '../stores/config';
+	import { bookmarks } from '../stores/bookmarks';
 	import ConfigInvert from './configInvert.svelte';
 </script>
 
@@ -70,21 +71,23 @@
 		</div>
 	</div>
 	<div class="col2 col">
-		<h2>Bookmarks bar</h2>
-		<label>
-			<input type="radio" bind:group={$config.bookmarksBar} value={'off'} />
-			Hide
-		</label>
+		{#if $bookmarks.length > 0}
+			<h2>Bookmarks bar</h2>
+			<label>
+				<input type="radio" bind:group={$config.bookmarksBar} value={'off'} />
+				Hide
+			</label>
 
-		<label>
-			<input type="radio" bind:group={$config.bookmarksBar} value={'auto_hide'} />
-			Show on hover
-		</label>
+			<label>
+				<input type="radio" bind:group={$config.bookmarksBar} value={'auto_hide'} />
+				Show on hover
+			</label>
 
-		<label>
-			<input type="radio" bind:group={$config.bookmarksBar} value={'show'} />
-			Show
-		</label>
+			<label>
+				<input type="radio" bind:group={$config.bookmarksBar} value={'show'} />
+				Show
+			</label>
+		{/if}
 		<ConfigInvert bind:inversion={$config.inversion} />
 	</div>
 	<div class="col1 col">
