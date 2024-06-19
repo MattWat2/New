@@ -2,23 +2,22 @@
 import type { StorageAdapter } from '.';
 
 /** Use `localStorage` API for non-extension usage */
-export class LocalStorageAdapter<T extends { [key: string]: any }> implements StorageAdapter<T> {
-	name = 'local storage';
-	isSupported = typeof window.localStorage !== 'undefined';
+export const localStorageAdapter: StorageAdapter = {
+	name: 'local storage',
+	isSupported: typeof window.localStorage !== 'undefined',
 
-	async get() {
+	get: async () => {
 		const storedVal = localStorage.getItem('config');
-
 		return storedVal == null ? undefined : JSON.parse(storedVal);
-	}
+	},
 
-	async set(val: T) {
+	set: async (val) => {
 		localStorage.setItem('config', JSON.stringify(val));
-	}
+	},
 
-	subscribeToExternalChanges(_: () => void, onChange: () => void | Promise<void>) {
+	subscribeToExternalChanges: (_, onChange) => {
 		window.addEventListener('storage', () => {
 			onChange();
 		});
 	}
-}
+};

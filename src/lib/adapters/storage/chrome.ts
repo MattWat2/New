@@ -2,31 +2,31 @@
 import type { StorageAdapter } from '.';
 
 /** Use `chrome` extension storage API provided by Chrome */
-export class ChromeStorageAdapter<T extends { [key: string]: any }> implements StorageAdapter<T> {
-	name = 'Chrome browser extension';
-	isSupported = typeof chrome !== 'undefined';
+export const chromeStorageAdapter: StorageAdapter = {
+	name: 'Chrome browser extension',
+	isSupported: typeof chrome !== 'undefined',
 
-	async get() {
+	get: async () => {
 		const sync = await chrome.storage.sync.get();
 
 		if (Object.keys(sync).length > 0) {
-			return sync as T;
+			return sync;
 		}
 
 		// Backwards compatibility with config from previous versions stored in local
 		const local = await chrome.storage.local.get();
 		if (Object.keys(sync).length > 0) {
-			return local as T;
+			return local;
 		}
 
 		return undefined;
-	}
+	},
 
-	async set(val: T) {
+	set: async (val) => {
 		return await chrome.storage.sync.set(val);
-	}
+	},
 
-	subscribeToExternalChanges(getLocalState: () => void, onChange: () => void | Promise<void>) {
+	subscribeToExternalChanges: (getLocalState, onChange) => {
 		chrome.storage.sync.onChanged.addListener((changes) => {
 			const val = getLocalState();
 			const dirtyChanges = Object.fromEntries(
@@ -38,4 +38,4 @@ export class ChromeStorageAdapter<T extends { [key: string]: any }> implements S
 			}
 		});
 	}
-}
+};

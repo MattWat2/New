@@ -2,25 +2,25 @@
 import type { StorageAdapter } from '.';
 
 /** Use `browser` extension storage API provided by Firefox */
-export class BrowserStorageAdapter<T extends { [key: string]: any }> implements StorageAdapter<T> {
-	name = 'generic browser extension';
-	isSupported = typeof browser !== 'undefined';
+export const browserStorageAdapter: StorageAdapter = {
+	name: 'generic browser extension',
+	isSupported: typeof browser !== 'undefined',
 
-	async get() {
+	get: async () => {
 		const sync = await browser.storage.sync.get();
 
 		if (Object.keys(sync).length > 0) {
-			return sync as T;
+			return sync;
 		}
-
+		Intl.PluralRules;
 		return undefined;
-	}
+	},
 
-	async set(val: T) {
+	set: async (val) => {
 		return await browser.storage.sync.set(val);
-	}
+	},
 
-	subscribeToExternalChanges(getLocalState: () => void, onChange: () => void | Promise<void>) {
+	subscribeToExternalChanges: (getLocalState, onChange) => {
 		browser.storage.sync.onChanged.addListener((changes) => {
 			const val = getLocalState();
 			const dirtyChanges = Object.fromEntries(
@@ -32,4 +32,4 @@ export class BrowserStorageAdapter<T extends { [key: string]: any }> implements 
 			}
 		});
 	}
-}
+};
