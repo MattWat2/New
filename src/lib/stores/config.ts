@@ -1,5 +1,11 @@
-import { readonly, writable, get } from 'svelte/store';
-import { configAny, defaultConfig, migrateToLatest, type ConfigLatest } from '../config/latest';
+import { writable, get } from 'svelte/store';
+import {
+	configAny,
+	defaultConfig,
+	migrateToLatest,
+	type ConfigLatest,
+	configLatest
+} from '../config/latest';
 import { getStorageAdapter } from '../adapters/storage';
 
 const storageAdapter = getStorageAdapter();
@@ -18,18 +24,26 @@ const loadConfig = async (): Promise<ConfigLatest> => {
 
 const initialConfig = await loadConfig();
 
-export const writeableConfig = writable(initialConfig);
-export const config = readonly(writeableConfig);
-
-config.subscribe(storageAdapter.set);
+export const config = writable(initialConfig);
+const validConfig = writable(initialConfig);
 
 config.subscribe(async (newConfig) => {
 	console.info('Config updated to', newConfig);
+	const result = configLatest.safeParse(newConfig);
+
+	if (result.success) {
+		validConfig.set(result.data);
+	} else {
+		console.error('Attempted to update to invalid config. Rolling back.', result.error);
+		config.set(get(validConfig));
+	}
 });
+
+validConfig.subscribe(storageAdapter.set);
 
 storageAdapter.subscribeToExternalChanges(
 	() => get(config),
 	() => {
-		loadConfig().then(writeableConfig.set);
+		loadConfig().then(config.set);
 	}
 );

@@ -1,7 +1,10 @@
 <script lang="ts">
-	import { writeableConfig as config } from '../stores/config';
+	import { config } from '../stores/config';
 	import { bookmarks } from '../stores/bookmarks';
 	import ConfigInvert from './configInvert.svelte';
+	import { configLatest } from '../config/latest';
+
+	const { colorDark, colorLight, belowHints, size, bookmarksBar } = configLatest.shape;
 </script>
 
 <div class="container">
@@ -17,9 +20,9 @@
 			<label>
 				Show
 				<select bind:value={$config.belowHints}>
-					<option value="off">Nothing</option>
-					<option value="letters">Letters</option>
-					<option value="digits">Digits</option>
+					<option value={belowHints.enum.off}>Nothing</option>
+					<option value={belowHints.enum.letters}>Letters</option>
+					<option value={belowHints.enum.digits}>Digits</option>
 				</select>
 				below clock
 			</label>
@@ -28,10 +31,10 @@
 			<label>
 				Size:
 				<select bind:value={$config.size}>
-					<option value="xs">Tiny</option>
-					<option value="sm">Small</option>
-					<option value="md">Medium</option>
-					<option value="lg">Large</option>
+					<option value={size.enum.xs}>Tiny</option>
+					<option value={size.enum.sm}>Small</option>
+					<option value={size.enum.md}>Medium</option>
+					<option value={size.enum.lg}>Large</option>
 				</select>
 			</label>
 		</div>
@@ -40,11 +43,11 @@
 			<label>
 				Dark colour:
 				<select bind:value={$config.colorDark} disabled={$config.hexDark}>
-					<option value="black">Black</option>
-					<option value="grey">Grey</option>
-					<option value="green">Green</option>
-					<option value="blue">Blue</option>
-					<option value="red">Red</option>
+					<option value={colorDark.enum.black}>Black</option>
+					<option value={colorDark.enum.grey}>Grey</option>
+					<option value={colorDark.enum.green}>Green</option>
+					<option value={colorDark.enum.blue}>Blue</option>
+					<option value={colorDark.enum.red}>Red</option>
 				</select>
 			</label>
 			<label>
@@ -56,12 +59,12 @@
 			<label>
 				Light colour:
 				<select bind:value={$config.colorLight} disabled={$config.hexLight}>
-					<option value="white">White</option>
-					<option value="grey">Grey</option>
-					<option value="green">Green</option>
-					<option value="blue">Blue</option>
-					<option value="pink">Pink</option>
-					<option value="orange">Orange</option>
+					<option value={colorLight.enum.white}>White</option>
+					<option value={colorLight.enum.grey}>Grey</option>
+					<option value={colorLight.enum.green}>Green</option>
+					<option value={colorLight.enum.blue}>Blue</option>
+					<option value={colorLight.enum.pink}>Pink</option>
+					<option value={colorLight.enum.orange}>Orange</option>
 				</select>
 			</label>
 			<label>
@@ -74,17 +77,17 @@
 		{#if $bookmarks.length > 0}
 			<h2>Bookmarks bar</h2>
 			<label>
-				<input type="radio" bind:group={$config.bookmarksBar} value={'off'} />
+				<input type="radio" bind:group={$config.bookmarksBar} value={bookmarksBar.enum.off} />
 				Hide
 			</label>
 
 			<label>
-				<input type="radio" bind:group={$config.bookmarksBar} value={'auto_hide'} />
+				<input type="radio" bind:group={$config.bookmarksBar} value={bookmarksBar.enum.auto_hide} />
 				Show on hover
 			</label>
 
 			<label>
-				<input type="radio" bind:group={$config.bookmarksBar} value={'show'} />
+				<input type="radio" bind:group={$config.bookmarksBar} value={bookmarksBar.enum.show} />
 				Show
 			</label>
 		{/if}

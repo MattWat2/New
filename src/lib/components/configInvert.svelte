@@ -1,8 +1,12 @@
 <script lang="ts">
-	import { type ConfigLatest } from '../config/latest';
+	import { configLatest, type ConfigLatest } from '../config/latest';
 	import { getTimes } from 'suncalc';
 
 	export let inversion: ConfigLatest['inversion'];
+
+	const autoCoordinates = 'auto_coordinates' satisfies ConfigLatest['inversion']['method'];
+	const off = 'off' satisfies ConfigLatest['inversion']['method'];
+	const on = 'on' satisfies ConfigLatest['inversion']['method'];
 
 	let method = inversion.method;
 
@@ -85,18 +89,18 @@
 
 <div class="labels">
 	<label>
-		<input type="radio" bind:group={method} value={'off'} />
+		<input type="radio" bind:group={method} value={off} />
 		Off
 	</label>
 
 	<label>
-		<input type="radio" bind:group={method} value={'on'} />
+		<input type="radio" bind:group={method} value={on} />
 		On
 	</label>
 
 	<div>
 		<label>
-			<input type="radio" bind:group={method} value={'auto_coordinates'} />
+			<input type="radio" bind:group={method} value={autoCoordinates} />
 			Sunset/sunrise
 		</label>
 		{#if method === 'auto_coordinates'}

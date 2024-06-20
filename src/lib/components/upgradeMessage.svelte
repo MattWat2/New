@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { writeableConfig as config } from '../stores/config';
+	import { config } from '../stores/config';
 	import { onMount } from 'svelte';
 
 	const appVersion = APP_VERSION;
@@ -13,8 +13,16 @@
 	});
 </script>
 
-{#if previousVersion === undefined}
-	Welcome to Binary Tab! Hover here for settings.
-{:else if previousVersion < appVersion}
-	Upgraded to v{appVersion}
-{/if}
+<span class="message">
+	{#if previousVersion === undefined}
+		Welcome to Binary Tab! Hover here for settings.
+	{:else if previousVersion < appVersion}
+		Upgraded to v{appVersion}. Hover here for settings.
+	{/if}
+</span>
+
+<style>
+	.message {
+		font-size: 0.875rem;
+	}
+</style>
