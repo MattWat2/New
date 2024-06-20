@@ -15,7 +15,7 @@ export const chromeStorageAdapter: StorageAdapter = {
 
 		// Backwards compatibility with config from previous versions stored in local
 		const local = await chrome.storage.local.get();
-		if (Object.keys(sync).length > 0) {
+		if (Object.keys(local).length > 0) {
 			return local;
 		}
 

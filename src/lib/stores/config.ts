@@ -15,7 +15,10 @@ const loadConfig = async (): Promise<ConfigLatest> => {
 
 	const configParse = configAny.safeParse(config);
 	if (configParse.success) {
+		console.info(`Retrieved config with version ${configParse.data.version}`);
 		return migrateToLatest(configParse.data);
+	} else if (config !== undefined) {
+		console.warn('Failed to parse stored config. Reverting to default.', configParse.error);
 	}
 
 	// If config missing or invalid, use default

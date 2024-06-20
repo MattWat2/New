@@ -73,7 +73,7 @@ const booleanMigration: Record<'0' | '1', boolean> = {
 const inversionMigration = (
 	v1: Pick<ConfigV1, 'invert' | 'auto-invert' | 'lat' | 'long'>
 ): ConfigV2['inversion'] => {
-	if (v1['auto-invert']) {
+	if (v1['auto-invert'] === '1') {
 		return {
 			method: 'auto_coordinates',
 			lat: v1.lat,
