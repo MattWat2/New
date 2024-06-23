@@ -76,8 +76,8 @@ const inversionMigration = (
 	if (v1['auto-invert'] === '1') {
 		return {
 			method: 'auto_coordinates',
-			lat: v1.lat,
-			long: v1.long
+			lat: typeof v1.lat === 'string' ? parseFloat(v1.lat) : v1.lat,
+			long: typeof v1.long === 'string' ? parseFloat(v1.long) : v1.long
 		};
 	}
 

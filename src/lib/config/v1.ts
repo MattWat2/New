@@ -14,8 +14,8 @@ export const configV1 = z.object({
 	hex: checkboxValue,
 	'hex-light': checkboxValue,
 	'auto-invert': checkboxValue,
-	lat: z.number().min(-90).max(90),
-	long: z.number().min(-180).max(180)
+	lat: z.union([z.string(), z.number()]),
+	long: z.union([z.string(), z.number()])
 });
 
 export type ConfigV1 = z.infer<typeof configV1>;
