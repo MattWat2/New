@@ -1,38 +1,41 @@
-# create-svelte
+<p align="center">
+  <img alt="Binary tab logo" src="public/icon.svg" />
+</p>
+<h1 align="center">Binary tab</h1>
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A simple and configurable full-screen binary clock. Available on a new tab page near you!
 
-## Creating a project
+![](images/sreenshot-3.png)
 
-If you're seeing this, you've probably already done this step. Congrats!
+This is a Svelte rewrite of the jQuery-based original. Svelte seemed like a good choice for its simple store utilities and small compiled output.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Features:
 
-# create a new project in my-app
-npm create svelte@latest my-app
+- **Cross-platform**: Capable of running as a Firefox new tab page extension, Chrome new tab page extension or standalone web app. The mode of operation is detected automatically.
+- **Validated config**: Config schema is defined using Zod. Only valid schemas will be committed to storage.
+- **Config migrations**: A config schema change is as simple as defining a new schema and a migration from the previous version. Any outdated schemas present in a user's storage will be upgraded on launch.
+
+## Install dependencies
+
+```shell
+npm install
 ```
 
-## Developing
+## Develop it
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+```shell
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## Unit test
 
-To create a production version of your app:
+```shell
+npm run test
+```
 
-```bash
+## Build and serve
+
+```shell
 npm run build
+npm run preview
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
