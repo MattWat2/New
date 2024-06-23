@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { StorageAdapter } from '.';
+import { deepEqual } from '../../deepEqual';
 
 /** Use `chrome` extension storage API provided by Chrome */
 export const chromeStorageAdapter: StorageAdapter = {
@@ -23,6 +24,7 @@ export const chromeStorageAdapter: StorageAdapter = {
 	},
 
 	set: async (val) => {
+		console.debug('Storing in Chrome sync:', val);
 		return await chrome.storage.sync.set(val);
 	},
 
@@ -30,11 +32,13 @@ export const chromeStorageAdapter: StorageAdapter = {
 		chrome.storage.sync.onChanged.addListener((changes) => {
 			const val = getLocalState();
 			const dirtyChanges = Object.fromEntries(
-				Object.entries(changes).filter(([k, c]) => c.newValue !== val?.[k])
+				Object.entries(changes).filter(([k, c]) => !deepEqual(c.newValue, val?.[k]))
 			);
 			if (Object.keys(dirtyChanges).length > 0) {
-				console.log('Settings updated externally:', dirtyChanges);
+				console.info('Settings updated externally', dirtyChanges);
 				onChange();
+			} else {
+				console.debug('Settings change event was ignored as already up-to-date');
 			}
 		});
 	}
