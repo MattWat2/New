@@ -125,12 +125,17 @@ input[type='text'],
 input[type='number'] {
 	border: 1px solid var(--bt-color-bg);
 	font-family: inherit;
-	color: inherit;
-	background-color: transparent;
+	color: var(--bt-color-bg);
+	background-color: var(--bt-color-fg);
 	height: 1.5em;
 	border-radius: 0.75em;
 	padding: 0 0.5em;
 	font-size: 1em;
+	transition: background-color 0.3s ease-in-out;
+}
+
+select > option {
+	color: var(--bt-color-bg);
 }
 
 input[type='text']:invalid,
