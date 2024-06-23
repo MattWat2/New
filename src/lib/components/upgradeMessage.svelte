@@ -8,8 +8,9 @@
 
 	onMount(() => {
 		previousVersion = $config.appVersion;
-		console.log('previous version is', previousVersion);
-		$config.appVersion = appVersion;
+		console.log(`Previous version is ${previousVersion}; this version is ${appVersion}`);
+
+		config.update((c) => ({ ...c, appVersion }));
 	});
 </script>
 
