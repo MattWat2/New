@@ -28,7 +28,8 @@ describe('migrating to the latest config version', () => {
 
 			expect(result).toMatchObject({
 				version: 2,
-				size: 'lg'
+				size: 'lg',
+				appVersion: '1.9'
 			} satisfies Partial<ConfigLatest>);
 		});
 	});
