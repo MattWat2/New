@@ -11,6 +11,7 @@ export type ConfigAny = z.infer<typeof configAny>;
 export const migrateToLatest = (config: ConfigAny): ConfigLatest => {
 	if (config.version === 1.9) {
 		const next = migrateV1ToV2(config);
+		console.info(`Migrated v${config.version} to v${next.version}`, next);
 		return migrateToLatest(next);
 	}
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { configLatest, type ConfigLatest } from '../config/latest';
+	import { type ConfigLatest } from '../config/latest';
 	import { getTimes } from 'suncalc';
 
 	export let inversion: ConfigLatest['inversion'];
@@ -32,12 +32,6 @@
 	let sun: { sunrise: Date; sunset: Date } | undefined;
 
 	$: {
-		console.log({
-			method,
-			latitude,
-			longitude,
-			latval: latitudeInput?.validity.valid
-		});
 		if (method === 'off') {
 			inversion = {
 				method: 'off'

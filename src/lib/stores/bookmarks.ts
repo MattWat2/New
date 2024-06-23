@@ -8,7 +8,7 @@ const initialBookmarks = await adapter.get();
 export const bookmarks = writable(initialBookmarks);
 
 bookmarks.subscribe(async (newBookmarks) => {
-	console.info('Bookmarks updated to', newBookmarks);
+	console.debug('Bookmarks updated to', newBookmarks);
 });
 
 adapter.subscribeToExternalChanges(async () => {
