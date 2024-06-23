@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New Tab</title>
+	<link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="binary.css" />
+	<link rel="stylesheet" type="text/css" href="jquery-ui-1.11.1.custom/jquery-ui.css" />
+	<script type="text/javascript" src="suncalc.js"></script>
+	<script type="text/javascript" src="jquery-1.11.1.js"></script>
+	<!--<script src="jquery-ui-1.11.1.custom/jquery-ui.js"></script>-->
+	<script type="text/javascript" src="binary.js"></script>
+	<!--<script type="text/javascript" src="bookmarks.js"></script>-->
+</head>
+<body>
+<div id="bbar-hover-region"></div>
+<div id="bbar">
+<ul id="blist">
+<span id="binner"></span>
+
+</ul>
+<div id="bnull">No bookmarks</div>
+</div>
+<div id="wrapper">
+	<div id="container">
+		<table id="circles">
+			<tr class="bin" id="eight">
+				<td class="column0"></div></td><td class="column1"><div class="circle"></div></td><td class="column2"></td><td class="column3"><div class="circle"></div></td><td class="column4"></td><td class="column5"><div class="circle"></div></td><td class="vert-tip">8</td>			</tr>
+			<tr class="bin" id="four">
+				<td class="column0"></div></td><td class="column1"><div class="circle"></div></td><td class="column2"><div class="circle"></div></td><td class="column3"><div class="circle"></div></td><td class="column4"><div class="circle"></div></td><td class="column5"><div class="circle"></div></td><td class="vert-tip">4</td>			</tr>
+			<tr class="bin" id="two">
+				<td class="column0"><div class="circle"></div></td><td class="column1"><div class="circle"></div></td><td class="column2"><div class="circle"></div></td><td class="column3"><div class="circle"></div></td><td class="column4"><div class="circle"></div></td><td class="column5"><div class="circle"></div></td><td class="vert-tip">2</td>			</tr>
+			<tr class="bin" id="one">
+				<td class="column0"><div class="circle"></div></td><td class="column1"><div class="circle"></div></td><td class="column2"><div class="circle"></div></td><td class="column3"><div class="circle"></div></td><td class="column4"><div class="circle"></div></td><td class="column5"><div class="circle"></div></td><td class="vert-tip">1</td></tr>
+			<tr id="tooltip">
+				<td>H</td>
+				<td>H</td>
+				<td>M</td>
+				<td>M</td>
+				<td>S</td>
+				<td>S</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div id="settings-hover-zone">
+	<div id="update-l" class="update">Updated to version <span class="version"></span></div>
+	<a id="settings-show-button" class="fa fa-cog" href="#settings"></a>
+	<div id="update-r" class="update">Hover here for settings</div>
+	<div id="settings">
+		<div id="settings-wrapper">
+			<h2>Settings</h2><a id="close-button" href="#" class="fa fa-close" title="Close"></a>
+			<div action="" class="settings-main" id="settings-form">
+				<div id="settings-column-1">
+					<span class="settings-item">Bookmarks bar:&nbsp;
+						<select name="bookmarks">
+							<option value="0">Hide</option>
+							<option value="1">Auto-Hide</option>
+							<option value="2">Show</option>
+						</select>
+					<span class="settings-item">Size:&nbsp;
+						<select name="size">
+							<option value="1">Tiny</option>
+							<option value="2">Small</option>
+							<option value="3">Medium</option>
+							<option value="4">Large</option>
+						</select>
+					</span>
+					<div class="inline-group">
+					<span class="settings-item">Light colour:&nbsp;
+						<select name="light">
+							<option value="blue">Blue</option>
+							<option value="green">Green</option>
+							<option value="grey">Grey</option>
+							<option value="orange">Orange</option>
+							<option value="pink">Pink</option>
+							<option value="white">White</option>
+						</select>
+					</span>
+					<span class="settings-item"><input type="checkbox" name="hex-light" id="hex-light" value="yes" /><label for="hex-light">Hex</label></span>
+					</div>
+					<div class="inline-group">
+					<span class="settings-item">Dark colour:&nbsp;
+						<select name="dark">
+							<option value="black">Black</option>
+							<option value="blue">Blue</option>
+							<option value="green">Green</option>
+							<option value="grey">Grey</option>
+							<option value="red">Red</option>
+						</select>
+					</span>
+					<span class="settings-item"><input type="checkbox" name="hex" id="hex" value="yes" /><label for="hex">Hex</label></span>
+					</div>					
+					<span class="settings-item"><input type="checkbox" name="invert" id="invert" value="yes" /><label for="invert">Invert colours</label></span>
+					<span class="settings-item">Version <span class="version"></span></span>
+				</div>
+				<div id="settings-column-2">
+					<span class="settings-item">Show 
+						<select name="last-row">
+							<option value="nothing">Nothing</option>
+							<option value="letters">Letters</option>
+							<option value="digits">Digits</option>
+						</select>  below clock</span>
+					<span class="settings-item"><input type="checkbox" name="show-vert-tip" id="tip" value="yes" /><label for="tip">Show vertical number hints after last column</label></span>
+					<span class="settings-item"><input type="checkbox" name="auto-invert" id="auto-invert" value="yes" /><label for="auto-invert">Automatically invert at sunset/sunrise...</label></span>
+					<div class="settings-group" id="suntools-wrap">
+						<form id="suntools" action="index.html">
+							<span class="settings-item"><label for="lat">Latitude: </label><input type="text" maxlength="10" name="lat" id="lat" value="" class="numerical" autocomplete="off" ></span>
+							<span class="settings-item"><label for="long">Longitude: </label><input type="text" maxlength="10" name="long" id="long" value="" class="numerical"  autocomplete="off"></span>
+							<span class="settings-item"><input type="submit" id="submit" value="Update" class="numerical" ></span>
+							<span class="status"></span>
+							<div class="little-button" target="blank" id="geolocate" title="Use current location"><i class="fa fa-crosshairs"></i></div>
+							<a class="little-button" target="blank" id="lookup" href="http://www.latlong.net/" title="Lookup"><i class="fa fa-search"></i></a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
