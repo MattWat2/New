@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { StorageAdapter } from '.';
+import { deepEqual } from '../../deepEqual';
 
 /** Use `browser` extension storage API provided by Firefox */
 export const browserStorageAdapter: StorageAdapter = {
@@ -17,6 +18,7 @@ export const browserStorageAdapter: StorageAdapter = {
 	},
 
 	set: async (val) => {
+		console.debug('Storing in browser sync:', val);
 		return await browser.storage.sync.set(val);
 	},
 
@@ -24,11 +26,13 @@ export const browserStorageAdapter: StorageAdapter = {
 		browser.storage.sync.onChanged.addListener((changes) => {
 			const val = getLocalState();
 			const dirtyChanges = Object.fromEntries(
-				Object.entries(changes).filter(([k, c]) => c.newValue !== val?.[k])
+				Object.entries(changes).filter(([k, c]) => !deepEqual(c.newValue, val?.[k]))
 			);
 			if (Object.keys(dirtyChanges).length > 0) {
 				console.log('Settings updated externally:', dirtyChanges);
 				onChange();
+			} else {
+				console.debug('Settings change event was ignored as already up-to-date');
 			}
 		});
 	}
