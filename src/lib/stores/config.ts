@@ -51,7 +51,7 @@ config.subscribe(async (newConfig) => {
 validConfig.subscribe(storageAdapter.set);
 
 storageAdapter.subscribeToExternalChanges(
-	() => get(config),
+	() => get(validConfig),
 	() => {
 		loadConfig().then(config.set);
 	}
